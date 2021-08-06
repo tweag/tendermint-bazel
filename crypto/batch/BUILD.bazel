@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "batch",
+    srcs = ["batch.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/batch",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/sr25519",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":batch",
+    visibility = ["//visibility:public"],
+)

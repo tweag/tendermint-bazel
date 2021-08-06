@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "generator_lib",
+    srcs = [
+        "generate.go",
+        "main.go",
+        "random.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/test/e2e/generator",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//libs/log",
+        "//test/e2e/pkg",
+        "//types",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_binary(
+    name = "generator",
+    embed = [":generator_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "generator_test",
+    srcs = ["random_test.go"],
+    embed = [":generator_lib"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

@@ -1,0 +1,49 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "proxy",
+    srcs = [
+        "app_conn.go",
+        "client.go",
+        "multi_app_conn.go",
+        "version.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proxy",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/client",
+        "//abci/example/kvstore",
+        "//abci/types",
+        "//internal/libs/sync",
+        "//libs/log",
+        "//libs/service",
+        "//version",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":proxy",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "proxy_test",
+    srcs = [
+        "app_conn_test.go",
+        "multi_app_conn_test.go",
+    ],
+    embed = [":proxy"],
+    deps = [
+        "//abci/client",
+        "//abci/client/mocks",
+        "//abci/example/kvstore",
+        "//abci/server",
+        "//abci/types",
+        "//libs/log",
+        "//libs/rand",
+        "//proxy/mocks",
+        "@com_github_stretchr_testify//mock",
+        "@com_github_stretchr_testify//require",
+    ],
+)

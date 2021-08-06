@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "blockchain",
+    srcs = [
+        "doc.go",
+        "msgs.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/blockchain",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//proto/tendermint/blockchain",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":blockchain",
+    visibility = ["//:__subpackages__"],
+)

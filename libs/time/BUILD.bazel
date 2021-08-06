@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "time",
+    srcs = ["time.go"],
+    importpath = "github.com/tendermint/tendermint/libs/time",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":time",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "time_test",
+    srcs = ["time_test.go"],
+    embed = [":time"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

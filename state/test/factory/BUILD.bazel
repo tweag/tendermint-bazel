@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "factory",
+    srcs = ["block.go"],
+    importpath = "github.com/tendermint/tendermint/state/test/factory",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/test/factory",
+        "//state",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":factory",
+    visibility = ["//visibility:public"],
+)

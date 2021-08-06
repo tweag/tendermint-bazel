@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sync",
+    srcs = ["atomic_bool.go"],
+    importpath = "github.com/tendermint/tendermint/libs/sync",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":sync",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "sync_test",
+    srcs = ["atomic_bool_test.go"],
+    embed = [":sync"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

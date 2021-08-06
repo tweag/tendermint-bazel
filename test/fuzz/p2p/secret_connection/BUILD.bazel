@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "secret_connection",
+    srcs = ["read_write.go"],
+    importpath = "github.com/tendermint/tendermint/test/fuzz/p2p/secret_connection",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/ed25519",
+        "//internal/p2p/conn",
+        "//libs/async",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":secret_connection",
+    visibility = ["//visibility:public"],
+)

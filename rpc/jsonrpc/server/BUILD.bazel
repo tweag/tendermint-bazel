@@ -1,0 +1,52 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "server",
+    srcs = [
+        "http_json_handler.go",
+        "http_server.go",
+        "http_uri_handler.go",
+        "rpc_func.go",
+        "ws_handler.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/rpc/jsonrpc/server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/json",
+        "//libs/log",
+        "//libs/service",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/types",
+        "@com_github_gorilla_websocket//:websocket",
+        "@org_golang_x_net//netutil",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "server_test",
+    srcs = [
+        "http_json_handler_test.go",
+        "http_server_test.go",
+        "parse_test.go",
+        "ws_handler_test.go",
+    ],
+    data = [
+        "test.crt",
+        "test.key",
+    ],
+    embed = [":server"],
+    deps = [
+        "//libs/bytes",
+        "//libs/log",
+        "//rpc/jsonrpc/types",
+        "@com_github_gorilla_websocket//:websocket",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

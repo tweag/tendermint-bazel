@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "net",
+    srcs = ["net.go"],
+    importpath = "github.com/tendermint/tendermint/libs/net",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":net",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "net_test",
+    srcs = ["net_test.go"],
+    embed = [":net"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

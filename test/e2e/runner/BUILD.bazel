@@ -1,0 +1,45 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "runner_lib",
+    srcs = [
+        "benchmark.go",
+        "cleanup.go",
+        "evidence.go",
+        "exec.go",
+        "load.go",
+        "main.go",
+        "perturb.go",
+        "rpc.go",
+        "setup.go",
+        "start.go",
+        "test.go",
+        "wait.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/test/e2e/runner",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//config",
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/tmhash",
+        "//internal/test/factory",
+        "//libs/json",
+        "//libs/log",
+        "//privval",
+        "//proto/tendermint/types",
+        "//rpc/client/http",
+        "//rpc/core/types",
+        "//test/e2e/pkg",
+        "//types",
+        "//version",
+        "@com_github_burntsushi_toml//:toml",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)
+
+go_binary(
+    name = "runner",
+    embed = [":runner_lib"],
+    visibility = ["//visibility:public"],
+)

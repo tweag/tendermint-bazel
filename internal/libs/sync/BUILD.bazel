@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sync",
+    srcs = [
+        "closer.go",
+        "sync.go",
+        "waker.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/libs/sync",
+    visibility = ["//:__subpackages__"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":sync",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "sync_test",
+    srcs = [
+        "closer_test.go",
+        "waker_test.go",
+    ],
+    deps = [
+        ":sync",
+        "@com_github_stretchr_testify//require",
+    ],
+)

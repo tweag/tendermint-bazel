@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "types",
+    srcs = [
+        "height_vote_set.go",
+        "peer_round_state.go",
+        "round_state.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/consensus/types",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//libs/bits",
+        "//libs/bytes",
+        "//libs/json",
+        "//libs/math",
+        "//proto/tendermint/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":types",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "types_test",
+    srcs = [
+        "height_vote_set_test.go",
+        "peer_round_state_test.go",
+    ],
+    embed = [":types"],
+    deps = [
+        "//config",
+        "//crypto/tmhash",
+        "//internal/test/factory",
+        "//libs/bits",
+        "//libs/rand",
+        "//libs/time",
+        "//proto/tendermint/types",
+        "//types",
+        "@com_github_stretchr_testify//require",
+    ],
+)

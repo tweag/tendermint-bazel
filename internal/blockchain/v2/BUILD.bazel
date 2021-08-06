@@ -1,0 +1,74 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "blockchain",
+    srcs = [
+        "io.go",
+        "metrics.go",
+        "processor.go",
+        "processor_context.go",
+        "reactor.go",
+        "routine.go",
+        "scheduler.go",
+        "types.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/blockchain/v2",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/blockchain",
+        "//internal/blockchain/v2/internal/behavior",
+        "//internal/consensus",
+        "//internal/libs/sync",
+        "//internal/p2p",
+        "//libs/log",
+        "//libs/sync",
+        "//proto/tendermint/blockchain",
+        "//state",
+        "//types",
+        "@com_github_go_kit_kit//metrics",
+        "@com_github_go_kit_kit//metrics/discard",
+        "@com_github_go_kit_kit//metrics/prometheus",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_prometheus_client_golang//prometheus",
+        "@com_github_workiva_go_datastructures//queue",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":blockchain",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "blockchain_test",
+    srcs = [
+        "processor_test.go",
+        "reactor_test.go",
+        "routine_test.go",
+        "scheduler_test.go",
+    ],
+    embed = [":blockchain"],
+    deps = [
+        "//abci/types",
+        "//config",
+        "//internal/blockchain/v2/internal/behavior",
+        "//internal/consensus",
+        "//internal/mempool/mock",
+        "//internal/p2p",
+        "//internal/p2p/conn",
+        "//internal/test/factory",
+        "//libs/log",
+        "//libs/service",
+        "//proto/tendermint/blockchain",
+        "//proxy",
+        "//state",
+        "//state/test/factory",
+        "//store",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)

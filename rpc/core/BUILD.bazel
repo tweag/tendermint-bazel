@@ -1,0 +1,74 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "core",
+    srcs = [
+        "abci.go",
+        "blocks.go",
+        "consensus.go",
+        "dev.go",
+        "doc.go",
+        "env.go",
+        "events.go",
+        "evidence.go",
+        "health.go",
+        "mempool.go",
+        "net.go",
+        "routes.go",
+        "status.go",
+        "tx.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/rpc/core",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//config",
+        "//crypto",
+        "//internal/consensus",
+        "//internal/mempool",
+        "//internal/p2p",
+        "//libs/bytes",
+        "//libs/json",
+        "//libs/log",
+        "//libs/math",
+        "//libs/pubsub",
+        "//libs/pubsub/query",
+        "//proxy",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/server",
+        "//rpc/jsonrpc/types",
+        "//state",
+        "//state/indexer",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":core",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "core_test",
+    srcs = [
+        "blocks_test.go",
+        "env_test.go",
+        "net_test.go",
+    ],
+    embed = [":core"],
+    deps = [
+        "//abci/types",
+        "//config",
+        "//internal/p2p",
+        "//libs/log",
+        "//proto/tendermint/state",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/types",
+        "//state",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)

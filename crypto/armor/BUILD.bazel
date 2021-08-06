@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "armor",
+    srcs = ["armor.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/armor",
+    visibility = ["//visibility:public"],
+    deps = ["@org_golang_x_crypto//openpgp/armor"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":armor",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "armor_test",
+    srcs = ["armor_test.go"],
+    embed = [":armor"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

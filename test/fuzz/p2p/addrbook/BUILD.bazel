@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "addrbook",
+    srcs = ["fuzz.go"],
+    importpath = "github.com/tendermint/tendermint/test/fuzz/p2p/addrbook",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/p2p",
+        "//internal/p2p/pex",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":addrbook",
+    visibility = ["//visibility:public"],
+)

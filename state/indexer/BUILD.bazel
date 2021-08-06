@@ -1,0 +1,47 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "indexer",
+    srcs = [
+        "eventsink.go",
+        "indexer.go",
+        "indexer_service.go",
+        "query_range.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/state/indexer",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//libs/pubsub/query",
+        "//libs/service",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":indexer",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "indexer_test",
+    srcs = ["indexer_service_test.go"],
+    data = ["//state/indexer/sink/psql:schema.sql"],
+    tags = ["exclusive"],
+    deps = [
+        ":indexer",
+        "//abci/types",
+        "//libs/log",
+        "//state/indexer/sink/kv",
+        "//state/indexer/sink/psql",
+        "//types",
+        "@com_github_adlio_schema//:schema",
+        "@com_github_lib_pq//:pq",
+        "@com_github_ory_dockertest//:dockertest",
+        "@com_github_ory_dockertest//docker",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)

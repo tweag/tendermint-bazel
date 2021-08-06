@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "tmhash",
+    srcs = ["hash.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/tmhash",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":tmhash",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "tmhash_test",
+    srcs = ["hash_test.go"],
+    deps = [
+        ":tmhash",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

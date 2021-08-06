@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "null",
+    srcs = ["null.go"],
+    importpath = "github.com/tendermint/tendermint/state/indexer/sink/null",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//libs/pubsub/query",
+        "//state/indexer",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":null",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "null_test",
+    srcs = ["null_test.go"],
+    embed = [":null"],
+    deps = [
+        "//state/indexer",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

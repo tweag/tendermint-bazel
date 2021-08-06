@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "tempfile",
+    srcs = ["tempfile.go"],
+    importpath = "github.com/tendermint/tendermint/internal/libs/tempfile",
+    visibility = ["//:__subpackages__"],
+    deps = ["//internal/libs/sync"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":tempfile",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "tempfile_test",
+    srcs = ["tempfile_test.go"],
+    embed = [":tempfile"],
+    deps = [
+        "//libs/rand",
+        "@com_github_stretchr_testify//require",
+    ],
+)

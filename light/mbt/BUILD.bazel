@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "mbt",
+    srcs = ["doc.go"],
+    importpath = "github.com/tendermint/tendermint/light/mbt",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mbt",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "mbt_test",
+    srcs = ["driver_test.go"],
+    embed = [":mbt"],
+    deps = [
+        "//libs/json",
+        "//light",
+        "//types",
+        "@com_github_stretchr_testify//require",
+    ],
+)

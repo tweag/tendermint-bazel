@@ -1,0 +1,63 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "client",
+    srcs = [
+        "helpers.go",
+        "interface.go",
+        "types.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/rpc/client",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/bytes",
+        "//libs/service",
+        "//rpc/core/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":client",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "client_test",
+    srcs = [
+        "event_test.go",
+        "evidence_test.go",
+        "examples_test.go",
+        "helpers_test.go",
+        "main_test.go",
+        "rpc_test.go",
+    ],
+    tags = ["manual"],
+    deps = [
+        ":client",
+        "//abci/example/kvstore",
+        "//abci/types",
+        "//config",
+        "//crypto/ed25519",
+        "//crypto/encoding",
+        "//crypto/tmhash",
+        "//internal/mempool",
+        "//libs/json",
+        "//libs/log",
+        "//libs/math",
+        "//libs/rand",
+        "//libs/service",
+        "//privval",
+        "//proto/tendermint/types",
+        "//rpc/client/http",
+        "//rpc/client/local",
+        "//rpc/client/mock",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/client",
+        "//rpc/test",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

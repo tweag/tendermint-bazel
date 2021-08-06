@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "events",
+    srcs = [
+        "event_cache.go",
+        "events.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/libs/events",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/libs/sync",
+        "//libs/service",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":events",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "events_test",
+    srcs = [
+        "event_cache_test.go",
+        "events_test.go",
+    ],
+    embed = [":events"],
+    deps = [
+        "//libs/rand",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

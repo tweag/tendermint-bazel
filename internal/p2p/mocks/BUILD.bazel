@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mocks",
+    srcs = [
+        "connection.go",
+        "peer.go",
+        "transport.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/p2p/mocks",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//crypto",
+        "//internal/p2p",
+        "//internal/p2p/conn",
+        "//libs/log",
+        "//types",
+        "@com_github_stretchr_testify//mock",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mocks",
+    visibility = ["//:__subpackages__"],
+)

@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "null",
+    srcs = ["null.go"],
+    importpath = "github.com/tendermint/tendermint/state/indexer/block/null",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/pubsub/query",
+        "//state/indexer",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":null",
+    visibility = ["//visibility:public"],
+)

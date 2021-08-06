@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "statesync",
+    srcs = [
+        "message.go",
+        "types.pb.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/statesync",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//proto",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":statesync",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "statesync_test",
+    srcs = ["message_test.go"],
+    deps = [
+        ":statesync",
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "flowrate",
+    srcs = [
+        "flowrate.go",
+        "io.go",
+        "util.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/libs/flowrate",
+    visibility = ["//:__subpackages__"],
+    deps = ["//internal/libs/sync"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":flowrate",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "flowrate_test",
+    srcs = ["io_test.go"],
+    embed = [":flowrate"],
+)

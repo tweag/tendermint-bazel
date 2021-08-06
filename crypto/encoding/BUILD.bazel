@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "encoding",
+    srcs = ["codec.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/encoding",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/secp256k1",
+        "//crypto/sr25519",
+        "//libs/json",
+        "//proto/tendermint/crypto",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":encoding",
+    visibility = ["//visibility:public"],
+)

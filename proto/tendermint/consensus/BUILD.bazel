@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "consensus",
+    srcs = [
+        "message.go",
+        "types.pb.go",
+        "wal.pb.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/consensus",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/libs/bits",
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@com_github_golang_protobuf//ptypes/duration",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":consensus",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "consensus_test",
+    srcs = ["message_test.go"],
+    deps = [
+        ":consensus",
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//require",
+    ],
+)

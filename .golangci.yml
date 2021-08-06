@@ -1,0 +1,62 @@
+linters:
+  enable:
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    # - funlen
+    # - gochecknoglobals
+    # - gochecknoinits
+    - goconst
+    - gocritic
+    # - gocyclo
+    # - godox
+    - gofmt
+    - goimports
+    - golint
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    # - interfacer
+    - lll
+    - misspell
+    # - maligned
+    - nakedret
+    - prealloc
+    - scopelint
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    # - unparam
+    - unused
+    - varcheck
+    # - whitespace
+    # - wsl
+    # - gocognit
+    - nolintlint
+    - asciicheck
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+    - linters:
+        - lll
+      source: "https://"
+  max-same-issues: 50
+
+linters-settings:
+  dogsled:
+    max-blank-identifiers: 3
+  golint:
+    min-confidence: 0
+  maligned:
+    suggest-new: true
+  misspell:
+    locale: US

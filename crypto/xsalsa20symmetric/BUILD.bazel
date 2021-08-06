@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "xsalsa20symmetric",
+    srcs = ["symmetric.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/xsalsa20symmetric",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto",
+        "@org_golang_x_crypto//nacl/secretbox",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":xsalsa20symmetric",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "xsalsa20symmetric_test",
+    srcs = ["symmetric_test.go"],
+    embed = [":xsalsa20symmetric"],
+    deps = [
+        "//crypto",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@org_golang_x_crypto//bcrypt",
+    ],
+)

@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "internal",
+    srcs = [
+        "test_harness.go",
+        "utils.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/tools/tm-signer-harness/internal",
+    visibility = ["//tools/tm-signer-harness:__subpackages__"],
+    deps = [
+        "//crypto/ed25519",
+        "//crypto/tmhash",
+        "//libs/log",
+        "//libs/net",
+        "//libs/os",
+        "//privval",
+        "//proto/tendermint/types",
+        "//state",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":internal",
+    visibility = ["//tools/tm-signer-harness:__subpackages__"],
+)
+
+go_test(
+    name = "internal_test",
+    srcs = ["test_harness_test.go"],
+    embed = [":internal"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//libs/log",
+        "//privval",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

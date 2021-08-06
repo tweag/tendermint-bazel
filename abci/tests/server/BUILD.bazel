@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "server",
+    srcs = ["client.go"],
+    importpath = "github.com/tendermint/tendermint/abci/tests/server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/client",
+        "//abci/types",
+        "//libs/rand",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//visibility:public"],
+)

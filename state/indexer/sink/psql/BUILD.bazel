@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "psql",
+    srcs = ["psql.go"],
+    importpath = "github.com/tendermint/tendermint/state/indexer/sink/psql",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//libs/pubsub/query",
+        "//state/indexer",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_masterminds_squirrel//:squirrel",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":psql",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "psql_test",
+    srcs = ["psql_test.go"],
+    data = ["schema.sql"],
+    embed = [":psql"],
+    tags = ["exclusive"],
+    deps = [
+        "//abci/types",
+        "//state/indexer",
+        "//types",
+        "@com_github_adlio_schema//:schema",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_lib_pq//:pq",
+        "@com_github_masterminds_squirrel//:squirrel",
+        "@com_github_ory_dockertest//:dockertest",
+        "@com_github_ory_dockertest//docker",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)
+
+exports_files(
+    ["schema.sql"],
+    visibility = ["//state/indexer:__subpackages__"],
+)

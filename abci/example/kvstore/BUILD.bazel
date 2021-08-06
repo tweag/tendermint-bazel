@@ -1,0 +1,44 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "kvstore",
+    srcs = [
+        "helpers.go",
+        "kvstore.go",
+        "persistent_kvstore.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/abci/example/kvstore",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/example/code",
+        "//abci/types",
+        "//crypto/encoding",
+        "//libs/log",
+        "//libs/rand",
+        "//proto/tendermint/crypto",
+        "//version",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":kvstore",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "kvstore_test",
+    srcs = ["kvstore_test.go"],
+    embed = [":kvstore"],
+    deps = [
+        "//abci/client",
+        "//abci/example/code",
+        "//abci/server",
+        "//abci/types",
+        "//libs/log",
+        "//libs/service",
+        "//proto/tendermint/types",
+        "@com_github_stretchr_testify//require",
+    ],
+)

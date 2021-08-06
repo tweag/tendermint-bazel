@@ -1,0 +1,36 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "crypto",
+    srcs = [
+        "crypto.go",
+        "doc.go",
+        "hash.go",
+        "random.go",
+        "version.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/crypto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/tmhash",
+        "//libs/bytes",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":crypto",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "crypto_test",
+    srcs = [
+        "example_test.go",
+        "random_test.go",
+    ],
+    deps = [
+        ":crypto",
+        "@com_github_stretchr_testify//require",
+    ],
+)

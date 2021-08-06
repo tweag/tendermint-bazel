@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "types",
+    srcs = [
+        "block.pb.go",
+        "canonical.pb.go",
+        "events.pb.go",
+        "evidence.pb.go",
+        "params.pb.go",
+        "types.pb.go",
+        "validator.pb.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/types",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/crypto",
+        "//proto/tendermint/version",
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@com_github_golang_protobuf//ptypes/duration",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":types",
+    visibility = ["//visibility:public"],
+)

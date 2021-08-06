@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "p2p",
+    srcs = [
+        "conn.pb.go",
+        "pex.go",
+        "pex.pb.go",
+        "types.pb.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/p2p",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/crypto",
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":p2p",
+    visibility = ["//visibility:public"],
+)

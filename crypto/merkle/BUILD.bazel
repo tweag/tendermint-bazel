@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "merkle",
+    srcs = [
+        "doc.go",
+        "hash.go",
+        "proof.go",
+        "proof_key_path.go",
+        "proof_op.go",
+        "proof_value.go",
+        "tree.go",
+        "types.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/crypto/merkle",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/tmhash",
+        "//proto/tendermint/crypto",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":merkle",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "merkle_test",
+    srcs = [
+        "proof_key_path_test.go",
+        "proof_test.go",
+        "rfc6962_test.go",
+        "tree_test.go",
+    ],
+    embed = [":merkle"],
+    deps = [
+        "//crypto/tmhash",
+        "//internal/libs/test",
+        "//libs/rand",
+        "//proto/tendermint/crypto",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

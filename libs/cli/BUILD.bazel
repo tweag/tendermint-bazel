@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "cli",
+    srcs = [
+        "helper.go",
+        "setup.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/libs/cli",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_viper//:viper",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":cli",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "cli_test",
+    srcs = ["setup_test.go"],
+    embed = [":cli"],
+    deps = [
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_viper//:viper",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

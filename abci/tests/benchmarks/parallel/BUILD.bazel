@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "parallel_lib",
+    srcs = ["parallel.go"],
+    importpath = "github.com/tendermint/tendermint/abci/tests/benchmarks/parallel",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//abci/types",
+        "//libs/net",
+    ],
+)
+
+go_binary(
+    name = "parallel",
+    embed = [":parallel_lib"],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "init-corpus_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/tendermint/tendermint/test/fuzz/p2p/pex/init-corpus",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//crypto/ed25519",
+        "//internal/p2p",
+        "//internal/p2p/pex",
+        "//proto/tendermint/p2p",
+        "//types",
+    ],
+)
+
+go_binary(
+    name = "init-corpus",
+    embed = [":init-corpus_lib"],
+    visibility = ["//visibility:public"],
+)

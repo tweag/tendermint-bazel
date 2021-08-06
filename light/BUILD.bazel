@@ -1,0 +1,68 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "light",
+    srcs = [
+        "client.go",
+        "detector.go",
+        "doc.go",
+        "errors.go",
+        "setup.go",
+        "trust_options.go",
+        "verifier.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/light",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/tmhash",
+        "//internal/libs/sync",
+        "//libs/log",
+        "//libs/math",
+        "//light/provider",
+        "//light/provider/http",
+        "//light/store",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":light",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "light_test",
+    srcs = [
+        "client_benchmark_test.go",
+        "client_test.go",
+        "detector_test.go",
+        "example_test.go",
+        "helpers_test.go",
+        "verifier_test.go",
+    ],
+    # https://github.com/tendermint/tendermint/issues/5999
+    flaky = True,
+    deps = [
+        ":light",
+        "//abci/example/kvstore",
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/tmhash",
+        "//internal/test/factory",
+        "//libs/log",
+        "//libs/math",
+        "//libs/time",
+        "//light/provider",
+        "//light/provider/http",
+        "//light/provider/mock",
+        "//light/store/db",
+        "//proto/tendermint/types",
+        "//rpc/test",
+        "//types",
+        "//version",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)

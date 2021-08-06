@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mocks",
+    srcs = [
+        "evidence_pool.go",
+        "store.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/state/mocks",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/state",
+        "//state",
+        "//types",
+        "@com_github_stretchr_testify//mock",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mocks",
+    visibility = ["//visibility:public"],
+)

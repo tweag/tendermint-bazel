@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "tm-signer-harness_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/tendermint/tendermint/tools/tm-signer-harness",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//crypto/ed25519",
+        "//libs/log",
+        "//privval",
+        "//tools/tm-signer-harness/internal",
+        "//version",
+    ],
+)
+
+go_binary(
+    name = "tm-signer-harness",
+    embed = [":tm-signer-harness_lib"],
+    visibility = ["//visibility:public"],
+)

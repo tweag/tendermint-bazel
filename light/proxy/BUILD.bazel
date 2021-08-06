@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "proxy",
+    srcs = [
+        "proxy.go",
+        "routes.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/light/proxy",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/bytes",
+        "//libs/log",
+        "//libs/pubsub",
+        "//light",
+        "//light/rpc",
+        "//rpc/client",
+        "//rpc/client/http",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/server",
+        "//rpc/jsonrpc/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":proxy",
+    visibility = ["//visibility:public"],
+)

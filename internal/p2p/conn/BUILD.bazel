@@ -1,0 +1,71 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "conn",
+    srcs = [
+        "conn_go110.go",
+        "conn_notgo110.go",
+        "connection.go",
+        "secret_connection.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/p2p/conn",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/encoding",
+        "//internal/libs/flowrate",
+        "//internal/libs/protoio",
+        "//internal/libs/sync",
+        "//internal/libs/timer",
+        "//libs/async",
+        "//libs/log",
+        "//libs/math",
+        "//libs/service",
+        "//proto/tendermint/p2p",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@com_github_libp2p_go_buffer_pool//:go-buffer-pool",
+        "@com_github_oasisprotocol_curve25519_voi//primitives/merlin",
+        "@org_golang_x_crypto//chacha20poly1305",
+        "@org_golang_x_crypto//curve25519",
+        "@org_golang_x_crypto//hkdf",
+        "@org_golang_x_crypto//nacl/box",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":conn",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "conn_test",
+    srcs = [
+        "connection_test.go",
+        "evil_secret_connection_test.go",
+        "secret_connection_test.go",
+    ],
+    data = glob(["testdata/**"]),
+    embed = [":conn"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/encoding",
+        "//crypto/sr25519",
+        "//internal/libs/protoio",
+        "//libs/async",
+        "//libs/log",
+        "//libs/rand",
+        "//proto/tendermint/p2p",
+        "//proto/tendermint/types",
+        "@com_github_fortytw2_leaktest//:leaktest",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@com_github_oasisprotocol_curve25519_voi//primitives/merlin",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@org_golang_x_crypto//chacha20poly1305",
+    ],
+)

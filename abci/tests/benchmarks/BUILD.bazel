@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "benchmarks",
+    srcs = ["blank.go"],
+    importpath = "github.com/tendermint/tendermint/abci/tests/benchmarks",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":benchmarks",
+    visibility = ["//visibility:public"],
+)

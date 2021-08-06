@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mocks",
+    srcs = [
+        "app_conn_consensus.go",
+        "app_conn_mempool.go",
+        "app_conn_query.go",
+        "app_conn_snapshot.go",
+        "client_creator.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proxy/mocks",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/client",
+        "//abci/types",
+        "@com_github_stretchr_testify//mock",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mocks",
+    visibility = ["//visibility:public"],
+)

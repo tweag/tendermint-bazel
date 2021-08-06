@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "behavior",
+    srcs = [
+        "doc.go",
+        "peer_behaviour.go",
+        "reporter.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/blockchain/v2/internal/behavior",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/libs/sync",
+        "//internal/p2p",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":behavior",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "behavior_test",
+    srcs = ["reporter_test.go"],
+    deps = [
+        ":behavior",
+        "//types",
+    ],
+)

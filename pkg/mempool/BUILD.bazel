@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mempool",
+    srcs = ["errors.go"],
+    importpath = "github.com/tendermint/tendermint/pkg/mempool",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mempool",
+    visibility = ["//visibility:public"],
+)

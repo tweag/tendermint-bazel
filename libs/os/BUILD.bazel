@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "os",
+    srcs = ["os.go"],
+    importpath = "github.com/tendermint/tendermint/libs/os",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":os",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "os_test",
+    srcs = ["os_test.go"],
+    deps = [
+        ":os",
+        "@com_github_stretchr_testify//require",
+    ],
+)

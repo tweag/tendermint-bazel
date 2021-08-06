@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "mock",
+    srcs = [
+        "abci.go",
+        "client.go",
+        "status.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/rpc/client/mock",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//libs/bytes",
+        "//libs/service",
+        "//proxy",
+        "//rpc/client",
+        "//rpc/core",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mock",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "mock_test",
+    srcs = [
+        "abci_test.go",
+        "status_test.go",
+    ],
+    deps = [
+        ":mock",
+        "//abci/example/kvstore",
+        "//abci/types",
+        "//libs/bytes",
+        "//rpc/client",
+        "//rpc/core/types",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

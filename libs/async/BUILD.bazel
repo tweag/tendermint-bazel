@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "async",
+    srcs = ["async.go"],
+    importpath = "github.com/tendermint/tendermint/libs/async",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":async",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "async_test",
+    srcs = ["async_test.go"],
+    embed = [":async"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

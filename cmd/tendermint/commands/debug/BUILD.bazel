@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "debug",
+    srcs = [
+        "debug.go",
+        "dump.go",
+        "io.go",
+        "kill.go",
+        "util.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/cmd/tendermint/commands/debug",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config",
+        "//libs/cli",
+        "//libs/log",
+        "//rpc/client/http",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_viper//:viper",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":debug",
+    visibility = ["//visibility:public"],
+)

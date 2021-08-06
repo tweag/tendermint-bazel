@@ -1,0 +1,64 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "mempool",
+    srcs = [
+        "clist_mempool.go",
+        "doc.go",
+        "reactor.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/mempool/v0",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//abci/types",
+        "//config",
+        "//internal/libs/clist",
+        "//internal/libs/sync",
+        "//internal/mempool",
+        "//internal/p2p",
+        "//libs/log",
+        "//libs/math",
+        "//libs/service",
+        "//pkg/mempool",
+        "//proto/tendermint/mempool",
+        "//proxy",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mempool",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "mempool_test",
+    srcs = [
+        "bench_test.go",
+        "cache_test.go",
+        "clist_mempool_test.go",
+        "reactor_test.go",
+    ],
+    embed = [":mempool"],
+    deps = [
+        "//abci/example/kvstore",
+        "//abci/server",
+        "//abci/types",
+        "//config",
+        "//internal/mempool",
+        "//internal/p2p",
+        "//internal/p2p/p2ptest",
+        "//libs/log",
+        "//libs/rand",
+        "//libs/service",
+        "//pkg/mempool",
+        "//proto/tendermint/mempool",
+        "//proxy",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

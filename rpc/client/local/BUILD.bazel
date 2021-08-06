@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "local",
+    srcs = ["local.go"],
+    importpath = "github.com/tendermint/tendermint/rpc/client/local",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/bytes",
+        "//libs/log",
+        "//libs/pubsub",
+        "//libs/pubsub/query",
+        "//rpc/client",
+        "//rpc/core",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":local",
+    visibility = ["//visibility:public"],
+)

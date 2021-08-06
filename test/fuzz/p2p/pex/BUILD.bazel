@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pex",
+    srcs = ["reactor_receive.go"],
+    importpath = "github.com/tendermint/tendermint/test/fuzz/p2p/pex",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config",
+        "//crypto/ed25519",
+        "//internal/p2p",
+        "//internal/p2p/pex",
+        "//libs/log",
+        "//libs/service",
+        "//types",
+        "//version",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pex",
+    visibility = ["//visibility:public"],
+)

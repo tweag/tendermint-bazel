@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "benchmarking",
+    srcs = ["bench.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/internal/benchmarking",
+    visibility = ["//crypto:__subpackages__"],
+    deps = ["//crypto"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":benchmarking",
+    visibility = ["//crypto:__subpackages__"],
+)

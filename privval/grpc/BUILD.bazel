@@ -1,0 +1,57 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "grpc",
+    srcs = [
+        "client.go",
+        "server.go",
+        "util.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/privval/grpc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config",
+        "//crypto",
+        "//crypto/encoding",
+        "//libs/log",
+        "//libs/net",
+        "//proto/tendermint/privval",
+        "//proto/tendermint/types",
+        "//types",
+        "@com_github_grpc_ecosystem_go_grpc_middleware//retry",
+        "@com_github_grpc_ecosystem_go_grpc_prometheus//:go-grpc-prometheus",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//credentials",
+        "@org_golang_google_grpc//keepalive",
+        "@org_golang_google_grpc//status",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":grpc",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "grpc_test",
+    srcs = [
+        "client_test.go",
+        "server_test.go",
+    ],
+    deps = [
+        ":grpc",
+        "//crypto",
+        "//crypto/tmhash",
+        "//libs/log",
+        "//libs/rand",
+        "//proto/tendermint/privval",
+        "//proto/tendermint/types",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//test/bufconn",
+    ],
+)

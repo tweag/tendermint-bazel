@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "types",
+    srcs = [
+        "application.go",
+        "messages.go",
+        "pubkey.go",
+        "result.go",
+        "types.pb.go",
+        "util.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/abci/types",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto/ed25519",
+        "//crypto/encoding",
+        "//crypto/secp256k1",
+        "//crypto/sr25519",
+        "//internal/libs/protoio",
+        "//proto/tendermint/crypto",
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_gogo_protobuf//jsonpb",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_gogo_protobuf//types",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":types",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "types_test",
+    srcs = ["messages_test.go"],
+    embed = [":types"],
+    deps = [
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

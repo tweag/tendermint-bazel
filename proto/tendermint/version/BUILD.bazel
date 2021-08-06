@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "version",
+    srcs = ["types.pb.go"],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/version",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_gogo_protobuf//proto",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":version",
+    visibility = ["//visibility:public"],
+)

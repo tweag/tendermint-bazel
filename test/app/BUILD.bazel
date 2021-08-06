@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "app_lib",
+    srcs = ["grpc_client.go"],
+    importpath = "github.com/tendermint/tendermint/test/app",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//libs/json",
+        "//rpc/grpc",
+    ],
+)
+
+go_binary(
+    name = "app",
+    embed = [":app_lib"],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "server",
+    srcs = ["handler.go"],
+    importpath = "github.com/tendermint/tendermint/test/fuzz/rpc/jsonrpc/server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//libs/log",
+        "//rpc/jsonrpc/server",
+        "//rpc/jsonrpc/types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//visibility:public"],
+)

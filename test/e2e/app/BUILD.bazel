@@ -1,0 +1,45 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "app_lib",
+    srcs = [
+        "app.go",
+        "config.go",
+        "main.go",
+        "snapshots.go",
+        "state.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/test/e2e/app",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//abci/example/code",
+        "//abci/server",
+        "//abci/types",
+        "//config",
+        "//crypto/ed25519",
+        "//internal/p2p",
+        "//libs/log",
+        "//libs/net",
+        "//light",
+        "//light/proxy",
+        "//light/rpc",
+        "//light/store/db",
+        "//node",
+        "//privval",
+        "//privval/grpc",
+        "//proto/tendermint/privval",
+        "//proxy",
+        "//rpc/jsonrpc/server",
+        "//test/e2e/pkg",
+        "//version",
+        "@com_github_burntsushi_toml//:toml",
+        "@com_github_spf13_viper//:viper",
+        "@org_golang_google_grpc//:grpc",
+    ],
+)
+
+go_binary(
+    name = "app",
+    embed = [":app_lib"],
+    visibility = ["//visibility:public"],
+)

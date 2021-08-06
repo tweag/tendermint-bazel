@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "log",
+    srcs = [
+        "default.go",
+        "logger.go",
+        "nop.go",
+        "testing.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/libs/log",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_rs_zerolog//:zerolog"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":log",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "log_test",
+    srcs = ["default_test.go"],
+    deps = [
+        ":log",
+        "@com_github_stretchr_testify//require",
+    ],
+)

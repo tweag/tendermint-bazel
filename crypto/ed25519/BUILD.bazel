@@ -1,0 +1,36 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "ed25519",
+    srcs = ["ed25519.go"],
+    importpath = "github.com/tendermint/tendermint/crypto/ed25519",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto",
+        "//crypto/tmhash",
+        "//libs/json",
+        "@com_github_oasisprotocol_curve25519_voi//primitives/ed25519",
+        "@com_github_oasisprotocol_curve25519_voi//primitives/ed25519/extra/cache",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ed25519",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "ed25519_test",
+    srcs = [
+        "bench_test.go",
+        "ed25519_test.go",
+    ],
+    embed = [":ed25519"],
+    deps = [
+        "//crypto",
+        "//crypto/internal/benchmarking",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

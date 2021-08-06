@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pkg",
+    srcs = [
+        "manifest.go",
+        "testnet.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/test/e2e/pkg",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//crypto",
+        "//crypto/ed25519",
+        "//crypto/secp256k1",
+        "//rpc/client/http",
+        "//types",
+        "@com_github_burntsushi_toml//:toml",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pkg",
+    visibility = ["//visibility:public"],
+)

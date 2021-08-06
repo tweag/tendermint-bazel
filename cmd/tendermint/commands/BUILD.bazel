@@ -1,0 +1,69 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "commands",
+    srcs = [
+        "gen_node_key.go",
+        "gen_validator.go",
+        "init.go",
+        "light.go",
+        "probe_upnp.go",
+        "replay.go",
+        "reset_priv_validator.go",
+        "root.go",
+        "run_node.go",
+        "show_node_id.go",
+        "show_validator.go",
+        "testnet.go",
+        "version.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/cmd/tendermint/commands",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config",
+        "//crypto",
+        "//internal/consensus",
+        "//internal/p2p/upnp",
+        "//libs/bytes",
+        "//libs/json",
+        "//libs/log",
+        "//libs/math",
+        "//libs/net",
+        "//libs/os",
+        "//libs/rand",
+        "//libs/time",
+        "//light",
+        "//light/proxy",
+        "//light/rpc",
+        "//light/store/db",
+        "//privval",
+        "//privval/grpc",
+        "//rpc/jsonrpc/server",
+        "//types",
+        "//version",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_viper//:viper",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":commands",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "commands_test",
+    srcs = ["root_test.go"],
+    embed = [":commands"],
+    deps = [
+        "//config",
+        "//libs/cli",
+        "//libs/os",
+        "@com_github_spf13_cobra//:cobra",
+        "@com_github_spf13_viper//:viper",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

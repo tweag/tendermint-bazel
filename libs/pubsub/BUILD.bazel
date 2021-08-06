@@ -1,0 +1,40 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "pubsub",
+    srcs = [
+        "pubsub.go",
+        "subscription.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/libs/pubsub",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//internal/libs/sync",
+        "//libs/pubsub/query",
+        "//libs/service",
+        "@com_github_google_uuid//:uuid",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pubsub",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "pubsub_test",
+    srcs = [
+        "example_test.go",
+        "pubsub_test.go",
+    ],
+    deps = [
+        ":pubsub",
+        "//abci/types",
+        "//libs/log",
+        "//libs/pubsub/query",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

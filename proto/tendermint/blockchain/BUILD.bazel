@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "blockchain",
+    srcs = [
+        "message.go",
+        "types.pb.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/proto/tendermint/blockchain",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/tendermint/types",
+        "@com_github_gogo_protobuf//proto",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":blockchain",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "blockchain_test",
+    srcs = ["message_test.go"],
+    deps = [
+        ":blockchain",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "store",
+    srcs = [
+        "errors.go",
+        "store.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/light/store",
+    visibility = ["//visibility:public"],
+    deps = ["//types"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":store",
+    visibility = ["//visibility:public"],
+)

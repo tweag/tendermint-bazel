@@ -1,0 +1,36 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "autofile",
+    srcs = [
+        "autofile.go",
+        "group.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/libs/autofile",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//libs/rand",
+        "//libs/service",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":autofile",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "autofile_test",
+    srcs = [
+        "autofile_test.go",
+        "group_test.go",
+    ],
+    embed = [":autofile"],
+    deps = [
+        "//libs/os",
+        "//libs/rand",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

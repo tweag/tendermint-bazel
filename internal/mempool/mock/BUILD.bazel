@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mock",
+    srcs = ["mempool.go"],
+    importpath = "github.com/tendermint/tendermint/internal/mempool/mock",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//abci/types",
+        "//internal/libs/clist",
+        "//internal/mempool",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mock",
+    visibility = ["//:__subpackages__"],
+)

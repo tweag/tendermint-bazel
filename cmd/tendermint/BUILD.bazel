@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "tendermint_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/tendermint/tendermint/cmd/tendermint",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//cmd/tendermint/commands",
+        "//cmd/tendermint/commands/debug",
+        "//config",
+        "//libs/cli",
+        "//node",
+    ],
+)
+
+go_binary(
+    name = "tendermint",
+    embed = [":tendermint_lib"],
+    visibility = ["//visibility:public"],
+)

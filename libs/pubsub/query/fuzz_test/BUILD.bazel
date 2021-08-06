@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "fuzz_test",
+    srcs = ["main.go"],
+    importpath = "github.com/tendermint/tendermint/libs/pubsub/query/fuzz_test",
+    visibility = ["//visibility:public"],
+    deps = ["//libs/pubsub/query"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":fuzz_test",
+    visibility = ["//visibility:public"],
+)

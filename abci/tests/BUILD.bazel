@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "tests",
+    srcs = ["tests.go"],
+    importpath = "github.com/tendermint/tendermint/abci/tests",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":tests",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "tests_test",
+    srcs = ["client_server_test.go"],
+    embed = [":tests"],
+    deps = [
+        "//abci/client",
+        "//abci/example/kvstore",
+        "//abci/server",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

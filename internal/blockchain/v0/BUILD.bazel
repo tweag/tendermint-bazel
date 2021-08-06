@@ -1,0 +1,60 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "blockchain",
+    srcs = [
+        "pool.go",
+        "reactor.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/blockchain/v0",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/blockchain",
+        "//internal/consensus",
+        "//internal/libs/flowrate",
+        "//internal/libs/sync",
+        "//internal/p2p",
+        "//libs/log",
+        "//libs/service",
+        "//libs/sync",
+        "//proto/tendermint/blockchain",
+        "//state",
+        "//store",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":blockchain",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "blockchain_test",
+    srcs = [
+        "pool_test.go",
+        "reactor_test.go",
+    ],
+    embed = [":blockchain"],
+    deps = [
+        "//abci/types",
+        "//config",
+        "//internal/consensus",
+        "//internal/mempool/mock",
+        "//internal/p2p",
+        "//internal/p2p/p2ptest",
+        "//internal/test/factory",
+        "//libs/log",
+        "//libs/rand",
+        "//proto/tendermint/blockchain",
+        "//proxy",
+        "//state",
+        "//state/test/factory",
+        "//store",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)

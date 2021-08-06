@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "types",
+    srcs = ["responses.go"],
+    importpath = "github.com/tendermint/tendermint/rpc/core/types",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//abci/types",
+        "//crypto",
+        "//internal/p2p",
+        "//libs/bytes",
+        "//proto/tendermint/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":types",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "types_test",
+    srcs = ["responses_test.go"],
+    embed = [":types"],
+    deps = [
+        "//types",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

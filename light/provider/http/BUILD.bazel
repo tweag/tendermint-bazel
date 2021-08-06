@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "http",
+    srcs = ["http.go"],
+    importpath = "github.com/tendermint/tendermint/light/provider/http",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//light/provider",
+        "//rpc/client",
+        "//rpc/client/http",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/types",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":http",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "http_test",
+    srcs = ["http_test.go"],
+    deps = [
+        ":http",
+        "//abci/example/kvstore",
+        "//light/provider",
+        "//rpc/client",
+        "//rpc/client/http",
+        "//rpc/test",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+
+go_test(
+    name = "tests_test",
+    srcs = [
+        "app_test.go",
+        "block_test.go",
+        "e2e_test.go",
+        "evidence_test.go",
+        "net_test.go",
+        "validator_test.go",
+    ],
+    deps = [
+        "//rpc/client/http",
+        "//rpc/core/types",
+        "//test/e2e/pkg",
+        "//types",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+    ],
+)

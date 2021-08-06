@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "http",
+    srcs = [
+        "http.go",
+        "ws.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/rpc/client/http",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/libs/sync",
+        "//libs/bytes",
+        "//libs/json",
+        "//libs/log",
+        "//libs/pubsub",
+        "//libs/service",
+        "//rpc/client",
+        "//rpc/core/types",
+        "//rpc/jsonrpc/client",
+        "//types",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":http",
+    visibility = ["//visibility:public"],
+)

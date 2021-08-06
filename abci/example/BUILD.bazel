@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "example",
+    srcs = ["example.go"],
+    importpath = "github.com/tendermint/tendermint/abci/example",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "example_test",
+    srcs = ["example_test.go"],
+    embed = [":example"],
+    deps = [
+        "//abci/client",
+        "//abci/example/code",
+        "//abci/example/kvstore",
+        "//abci/server",
+        "//abci/types",
+        "//libs/log",
+        "//libs/net",
+        "@com_github_stretchr_testify//require",
+        "@org_golang_google_grpc//:grpc",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":example",
+    visibility = ["//visibility:public"],
+)

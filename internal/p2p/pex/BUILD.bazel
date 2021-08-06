@@ -1,0 +1,66 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "pex",
+    srcs = [
+        "addrbook.go",
+        "doc.go",
+        "errors.go",
+        "file.go",
+        "known_address.go",
+        "params.go",
+        "pex_reactor.go",
+        "reactor.go",
+    ],
+    importpath = "github.com/tendermint/tendermint/internal/p2p/pex",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//crypto",
+        "//internal/libs/sync",
+        "//internal/libs/tempfile",
+        "//internal/p2p",
+        "//internal/p2p/conn",
+        "//libs/cmap",
+        "//libs/log",
+        "//libs/math",
+        "//libs/rand",
+        "//libs/service",
+        "//proto/tendermint/p2p",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_minio_highwayhash//:highwayhash",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pex",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "pex_test",
+    srcs = [
+        "addrbook_test.go",
+        "bench_test.go",
+        "pex_reactor_test.go",
+        "reactor_test.go",
+    ],
+    embed = [":pex"],
+    deps = [
+        "//config",
+        "//crypto/ed25519",
+        "//internal/p2p",
+        "//internal/p2p/mock",
+        "//internal/p2p/p2ptest",
+        "//libs/log",
+        "//libs/math",
+        "//libs/rand",
+        "//proto/tendermint/p2p",
+        "//types",
+        "@com_github_gogo_protobuf//proto",
+        "@com_github_stretchr_testify//assert",
+        "@com_github_stretchr_testify//require",
+        "@com_github_tendermint_tm_db//:tm-db",
+    ],
+)
