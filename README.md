@@ -1,4 +1,7 @@
-# Tendermint
+# Tendermint Blog Post example
+
+This is the example code for the blog post [Building a Go project using Bazel](https://www.tweag.io/blog/2021-09-08-rules_go-gazelle/),
+which builds the [tendermint project](https://github.com/tendermint/tendermint/) using Bazel.
 
 ![banner](docs/tendermint-core-image.jpg)
 
